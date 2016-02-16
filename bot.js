@@ -80,6 +80,71 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
+controller.hears('temperatura cubo','direct_message,direct_mention,mention',function(bot,message) {
+	  bot.reply(message,'Ops essa funçao ainda nao ta disponivel, libera o sensor de temperatura ai capella !!!!');
+
+	});	
+
+controller.hears(['metro','metrô'],'direct_message,direct_mention,mention',function(bot,message) {
+    
+var Client = require('node-rest-client').Client;
+ 
+var client = new Client();
+ 
+// direct way 
+client.get("http://www.viaquatro.com.br/generic/Main/LineStatus", function (data, response) {
+	// parsed response body as js object 
+	var msg = "Situaçao do metro no momento: \n";
+	var status;
+	var linha;
+	for(var i = 0;i<=4;i++){
+	   linha  =  data.StatusMetro.ListLineStatus[i].Line;
+	   status  =  data.StatusMetro.ListLineStatus[i].StatusMetro;
+	   msg = msg+" "+linha+" "+status +"\n";
+	}
+     bot.reply(message,msg);
+	    
+	 
+    });
+
+});	
+
+
+controller.hears(['tempo','temperatura'],'direct_message,direct_mention,mention',function(bot,message) {
+    
+var Client = require('node-rest-client').Client;
+ 
+var client = new Client();
+ 
+// direct way 
+client.get("http://placaninja.com/?acao=request", function (data, response) {
+	// parsed response body as js object 
+	var msg = "A temperatura do cubo no momento e de: \n"+data+" ºC";
+	
+     bot.reply(message,msg);
+	    
+	 
+    });
+
+});	
+
+
+
+controller.hears('se apresente','direct_message,direct_mention,mention',function(bot,message) {
+    
+	  bot.reply(message,'Sou o robo com inteligência artificial programado em Node e responsavel pelo Cubo, posso te mostrar a temperatura atual, ligar o ar-condicionado, ligar as luzes, e ate pedir um Marmotex !!');
+        console.log("Eu");
+
+});	
+
+controller.hears('harley','direct_message,direct_mention,mention',function(bot,message) {
+    
+	  bot.reply(message,'VRUUUUUUUUM');
+        console.log("Eu");
+
+});	
+
+
 
 controller.hears(['hello','hi'],'direct_message,direct_mention,mention',function(bot, message) {
 
